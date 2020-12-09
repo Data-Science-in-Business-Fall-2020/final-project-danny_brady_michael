@@ -5,6 +5,12 @@ eat <- eat_concat
 drops <- drops_concat
 targets <- targets_concat
 
+
+setwd('C:/Users/bradi/OneDrive/Documents/Fall 2020/Stat 495R/final-project-danny_brady_michael')
+eat <- read.csv("eat_concat.csv", header = TRUE, sep = ",")
+drops <- read.csv("drops_concat.csv", header = TRUE, sep = ",")
+targets <- read.csv("targets_concat.csv", header = TRUE, sep = ",")
+
 # Assemble Relevant columns in Dataset for Total Sharks
 complete_variables_total <- c("Saury","Blue_Runner","Squid","Mackerel","Herring","Sardine",
                          "Mazuri_Vitamins","Garlic","Salmon","Bonito","Bluefish","Mahi","Goggle_Eye",
