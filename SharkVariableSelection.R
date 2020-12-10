@@ -1,3 +1,11 @@
+library("AER")
+library("MASS")
+library("bestglm")
+library("lmtest")
+library("GGally")
+library("car")
+library("normtest")
+
 # Finding the Best Selectino of Variables for Each Subset 
 
 # Read in Data
@@ -27,25 +35,38 @@ targets_total <- targets[,complete_variables_total]
 head(targets_total)
 
 # Find best selection for All Sharks Pieces Eaten
-full.model <- glm( Total ~ ., family="poisson", data=eat_total)
+full.model <- lm(Total ~ ., data=eat_total)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 eat_best_total <- best.lm
-eat_best_total
+#vif(best.lm)
+
+summary(eat_best_total)
+
+confint(best.lm)
+
+
+
 
 # Find best selection for All Sharks Pieces Dropped
-full.model <- glm( Total ~ ., family="poisson", data=drops_total)
+full.model <- lm( Total ~ ., data=drops_total)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 drops_best_total <- best.lm
-drops_best_total
+
+summary(drops_best_total)
+confint(best.lm)
+
+
 
 # Find best selection for All Sharks Number of Targets
-full.model <- glm( Total ~ ., family="poisson", data=targets_total)
+full.model <- lm( Total ~ ., data=targets_total)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 targets_best_total <- best.lm
-targets_best_total
+
+summary(targets_best_total)
+confint(best.lm)
 
 # Assemble Relevant columns in Dataset for Sandbars
 complete_variables_SS <- c("Saury","Blue_Runner","Squid","Mackerel","Herring","Sardine",
@@ -63,25 +84,28 @@ targets_SS <- targets[,complete_variables_SS]
 head(targets_SS)
 
 # Find best selection for SS Sharks Pieces Eaten
-full.model <- glm( All_SS ~ ., family="poisson", data=eat_SS)
+full.model <- lm( All_SS ~ .,data=eat_SS)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 eat_best_SS <- best.lm
-eat_best_SS
+summary(eat_best_SS)
+confint(best.lm)
 
 # Find best selection for SS Sharks Pieces Dropped
-full.model <- glm( All_SS ~ ., family="poisson", data=drops_SS)
+full.model <- lm( All_SS ~ ., data=drops_SS)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 drops_best_SS <- best.lm
-drops_best_SS
+summary(drops_best_SS)
+confint(best.lm)
 
 # Find best selection for SS Sharks Number of Targets
-full.model <- glm( All_SS ~ ., family="poisson", data=targets_SS)
+full.model <- lm( All_SS ~ ., data=targets_SS)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 targets_best_SS <- best.lm
-targets_best_SS
+summary(targets_best_SS)
+confint(best.lm)
 
 
 
@@ -101,25 +125,28 @@ targets_BT <- targets[,complete_variables_BT]
 head(targets_BT)
 
 # Find best selection for BT Sharks Pieces Eaten
-full.model <- glm( All_BT ~ ., family="poisson", data=eat_BT)
+full.model <- lm( All_BT ~ ., data=eat_BT)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 eat_best_BT <- best.lm
-eat_best_BT
+summary(eat_best_BT)
+confint(best.lm)
 
 # Find best selection for BT Sharks Pieces Dropped
-full.model <- glm( All_BT ~ ., family="poisson", data=drops_BT)
+full.model <- lm( All_BT ~ .,  data=drops_BT)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 drops_best_BT <- best.lm
-drops_best_BT
+summary(drops_best_BT)
+confint(best.lm)
 
 # Find best selection for BT Sharks Number of Targets
-full.model <- glm( All_BT ~ ., family="poisson", data=targets_BT)
+full.model <- lm( All_BT ~ ., data=targets_BT)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 targets_best_BT <- best.lm
-targets_best_BT
+summary(targets_best_BT)
+confint(best.lm)
 
 
 # Assemble Relevant columns in Dataset for Gray Reefs
@@ -138,25 +165,28 @@ targets_GR <- targets[,complete_variables_GR]
 head(targets_GR)
 
 # Find best selection for GR Sharks Pieces Eaten
-full.model <- glm( All_GR ~ ., family="poisson", data=eat_GR)
+full.model <- lm( All_GR ~ ., data=eat_GR)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 eat_best_GR <- best.lm
-eat_best_GR
+summary(eat_best_GR)
+confint(best.lm)
 
 # Find best selection for GR Sharks Pieces Dropped
-full.model <- glm( All_GR ~ ., family="poisson", data=drops_GR)
+full.model <- lm( All_GR ~ ., data=drops_GR)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 drops_best_GR <- best.lm
-drops_best_GR
+summary(drops_best_GR)
+confint(best.lm)
 
 # Find best selection for GR Sharks Number of Targets
-full.model <- glm( All_GR ~ ., family="poisson", data=targets_GR)
+full.model <- lm( All_GR ~ ., data=targets_GR)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 targets_best_GR <- best.lm
-targets_best_GR
+summary(targets_best_GR)
+confint(best.lm)
 
 
 # Assemble Relevant columns in Dataset for Male Sharks
@@ -175,25 +205,28 @@ targets_M <- targets[,complete_variables_M]
 head(targets_M)
 
 # Find best selection for Male Sharks Pieces Eaten
-full.model <- glm( male ~ ., family="poisson", data=eat_M)
+full.model <- lm(male ~ . ,data=eat_M)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 eat_best_M <- best.lm
-eat_best_M
+summary(eat_best_M)
+confint(best.lm)
 
 # Find best selection for Male Sharks Pieces Dropped
-full.model <- glm( male ~ ., family="poisson", data=drops_M)
+full.model <- lm( male ~ ., data=drops_M)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 drops_best_M <- best.lm
-drops_best_M
+summary(drops_best_M)
+confint(best.lm)
 
 # Find best selection for Male Sharks Number of Targets
-full.model <- glm( male ~ ., family="poisson", data=targets_M)
+full.model <- lm( male ~ ., data=targets_M)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 targets_best_M <- best.lm
-targets_best_M
+summary(targets_best_M)
+confint(best.lm)
 
 
 # Assemble Relevant columns in Dataset for Female Sharks
@@ -212,22 +245,25 @@ targets_F <- targets[,complete_variables_F]
 head(targets_F)
 
 # Find best selection for Female Sharks Pieces Eaten
-full.model <- glm( female ~ ., family="poisson", data=eat_F)
+full.model <- lm( female ~ ., data=eat_F)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 eat_best_F <- best.lm
-eat_best_F
+summary(eat_best_F)
+confint(best.lm)
 
 # Find best selection for Female Sharks Pieces Dropped
-full.model <- glm( female ~ ., family="poisson", data=drops_F)
+full.model <- lm( female ~ ., data=drops_F)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 drops_best_F <- best.lm
-drops_best_F
+summary(drops_best_F)
+confint(best.lm)
 
 # Find best selection for Female Sharks Number of Targets
-full.model <- glm( female ~ ., family="poisson", data=targets_F)
+full.model <- lm( female ~ .,data=targets_F)
 empty.model <- update(full.model, . ~ 1)
 best.lm <- step(empty.model,scope=list(lower=.~1, upper=formula(full.model)), direction = "both")
 targets_best_F <- best.lm
-targets_best_F
+summary(targets_best_F)
+confint(best.lm)
